@@ -29,7 +29,9 @@ export default class Task extends React.Component {
 
     render() {
 
-        if (this.props.isCompleted) {
+        if (this.props.isCompleted && this.props.isEditing) {
+            this.liClass = 'editing'
+        } else if (this.props.isCompleted) {
             this.liClass = 'completed'
         } else if (this.props.isEditing) {
             this.liClass = 'editing'
