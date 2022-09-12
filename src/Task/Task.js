@@ -1,76 +1,57 @@
 import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
+import React from 'react';
 
-function Task({ label, isCompleted, isEditing, date, toggleComplete }) {
 
-    let liClass;
-    const timeAgo = formatDistanceToNow(
-        date,
+export default class Task extends React.Component {
+    timeAgo = formatDistanceToNow(
+        this.props.date,
         {
             includeSeconds: true,
             addSuffix: true
         }
     )
 
+    liClass = ''
 
-    if (isCompleted) {
-        liClass = 'completed';
-    } else if (isEditing) {
-        liClass = 'editing'
+    state = {
+        text: this.props.label,
     }
 
-    return (
-        <li className={liClass}>
-            <div className="view">
-                <input className="toggle" checked={isCompleted} type="checkbox" onChange={toggleComplete} />
-                <label>
-                    <span className="description" onClick={toggleComplete}>{label}</span>
-                    <span className="created">created {timeAgo}</span>
-                </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy"></button>
-            </div>
-            <input type="text" className="edit" defaultValue={label} />
-        </li>
+    updateState = (e) => {
+        this.setState({
+            text: e.target.value
+        })
+    }
 
 
-        // <div>
-        //     <li className="completed">
-        //         <div className="view">
-        //             <input className="toggle" type="checkbox"/>
-        //                 <label>
-        //                     <span className="description">Completed task</span>
-        //                     <span className="created">created 17 seconds ago</span>
-        //                 </label>
-        //                 <button className="icon icon-edit"></button>
-        //                 <button className="icon icon-destroy"></button>
-        //         </div>
-        //     </li>
-        //     <li className="editing">
-        //         <div className="view">
-        //             <input className="toggle" type="checkbox"/>
-        //                 <label>
-        //                     <span className="description">Editing task</span>
-        //                     <span className="created">created 5 minutes ago</span>
-        //                 </label>
-        //                 <button className="icon icon-edit"></button>
-        //                 <button className="icon icon-destroy"></button>
-        //         </div>
-        //         <input type="text" className="edit" defaultValue="Editing task"/>
-        //     </li>
-        //     <li>
-        //         <div className="view">
-        //             <input className="toggle" type="checkbox"/>
-        //                 <label>
-        //                     <span className="description">Active task</span>
-        //                     <span className="created">created 5 minutes ago</span>
-        //                 </label>
-        //                 <button className="icon icon-edit"></button>
-        //                 <button className="icon icon-destroy"></button>
-        //         </div>
-        //     </li>
-        // </div>
-    )
+
+
+    render() {
+
+        if (this.props.isCompleted) {
+            this.liClass = 'completed'
+        } else if (this.props.isEditing) {
+            this.liClass = 'editing'
+        } else this.liClass = '';
+
+        return (
+            <li className={this.liClass}>
+                <div className="view">
+                    <input className="toggle" checked={this.props.isCompleted} type="checkbox" onChange={this.props.toggleComplete} />
+                    <label>
+                        <span className="description" onClick={this.props.toggleComplete}>{this.props.label}</span>
+                        <span className="created">created {this.timeAgo}</span>
+                    </label>
+                    <button className="icon icon-edit" onClick={() => this.props.startEditTodo(this.props.id)}></button>
+                    <button className="icon icon-destroy" onClick={this.props.deleteTodo}></button>
+                </div>
+                <input type="text"
+                    onChange={this.updateState}
+                    className="edit"
+                    value={this.state.text}
+                    onKeyDown={(e) => this.props.saveEditingTodo(e, this.props.id, this.state.text)} />
+            </li>
+        )
+    }
 }
-
-export default Task;
