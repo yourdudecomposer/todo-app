@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Header from '../Header/Header';
-import Main from '../Main/Main';
-
-
+import TaskList from '../TaskList/TaskList';
+import Footer from '../Footer/Footer';
 export default class App extends Component {
   state = {
     todos: [
@@ -60,7 +59,6 @@ export default class App extends Component {
         ...state.todos.slice(0, idx),
         ...state.todos.slice(idx + 1)
       ]
-      console.log(state.todos[0] === newArray[0])
       return {
         todos: newArray
       }
@@ -116,7 +114,6 @@ export default class App extends Component {
   }
 
   startEditTodo = (id) => {
-    console.log(id)
     this.setState(state => {
       let newArray = state.todos.map((todo) => {
         if (todo.id === id) {
@@ -130,7 +127,6 @@ export default class App extends Component {
 
   saveEditingTodo = (e, id, text) => {
     if (e.keyCode === 13) {
-      console.log(13)
       this.setState(state => {
         const idx = state.todos.findIndex(el => el.id === id);
         const newItem = { ...state.todos[idx], isEditing: false, label: text }
@@ -151,16 +147,22 @@ export default class App extends Component {
     return (
       <section className='todoapp'>
         <Header addTodo={this.addTodo} />
-        <Main
-          todos={visibleTodos}
-          toggleComplete={this.toggleComplete}
-          clearCompleted={this.clearCompleted}
-          deleteTodo={this.deleteTodo}
-          filter={this.state.filter}
-          onFilterChange={this.onFilterChange}
-          saveEditingTodo={this.saveEditingTodo}
-          startEditTodo={this.startEditTodo}
-        />
+        <section className='main'>
+          <TaskList
+            todos={visibleTodos}
+            toggleComplete={this.toggleComplete}
+            deleteTodo={this.deleteTodo}
+            saveEditingTodo={this.saveEditingTodo}
+            startEditTodo={this.startEditTodo}
+          />
+          <Footer
+            todos={visibleTodos}
+            clearCompleted={this.clearCompleted}
+            filter={this.state.filter}
+            onFilterChange={this.onFilterChange}
+          />
+        </section>
+
       </section>
     )
   }
