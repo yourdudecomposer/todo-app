@@ -1,9 +1,36 @@
 import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
-
+import PropTypes from 'prop-types'
 
 export default class Task extends React.Component {
+
+    static defaultProps = {
+        id: 0,
+        isCompleted: false,
+        isEditing: false,
+        label: "something wrong",
+        date: new Date(-8640000000000000),
+        toggleComplete: () => { },
+        deleteTodo: () => { },
+        saveEditingTodo: () => { },
+        startEditTodo: () => { },
+    }
+
+
+
+    static propTypes = {
+        id: PropTypes.number,
+        isCompleted: PropTypes.bool,
+        isEditing: PropTypes.bool,
+        label: PropTypes.string,
+        date: PropTypes.instanceOf(Date),
+        toggleComplete: PropTypes.func,
+        deleteTodo: PropTypes.func,
+        saveEditingTodo: PropTypes.func,
+        startEditTodo: PropTypes.func
+    }
+
     timeAgo = formatDistanceToNow(
         this.props.date,
         {
@@ -28,7 +55,6 @@ export default class Task extends React.Component {
 
 
     render() {
-
         if (this.props.isCompleted && this.props.isEditing) {
             this.liClass = 'editing'
         } else if (this.props.isCompleted) {

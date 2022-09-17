@@ -1,5 +1,8 @@
 import './Header.css';
 import NewTaskForm from '../NewTaskForm/NewTaskForm';
+import PropTypes from 'prop-types';
+
+
 function Header(props) {
     return (
         <header className="header">
@@ -9,6 +12,12 @@ function Header(props) {
     )
 }
 
+Header.defaultProps = {
+    addTodo: () => { }
+}
+Header.propTypes = {
+    addTodo: PropTypes.func
+}
 export default Header;
 
 

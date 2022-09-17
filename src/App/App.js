@@ -18,6 +18,26 @@ export default class App extends Component {
   todoId = 4;
 
 
+  addTodo = (label) => {
+    const newItem = {
+      label,
+      isCompleted: false,
+      isEditing: false,
+      id: this.todoId++,
+      date: new Date()
+    }
+    this.setState(state => {
+      const newArr = [
+        ...state.todos,
+        newItem
+      ]
+      return {
+        todos: newArr
+      }
+    })
+  }
+
+
   filter = (items, filter) => {
     switch (filter) {
       case 'all':
@@ -35,9 +55,11 @@ export default class App extends Component {
     }
   }
 
+
   onFilterChange = (filter) => {
     this.setState({ filter })
   }
+
 
   toggleComplete = (id) => {
     this.setState(state => {
@@ -61,27 +83,6 @@ export default class App extends Component {
       ]
       return {
         todos: newArray
-      }
-    })
-  }
-
-
-
-  addTodo = (label) => {
-    const newItem = {
-      label,
-      isCompleted: false,
-      isEditing: false,
-      id: this.todoId++,
-      date: new Date()
-    }
-    this.setState(state => {
-      const newArr = [
-        ...state.todos,
-        newItem
-      ]
-      return {
-        todos: newArr
       }
     })
   }
@@ -157,8 +158,8 @@ export default class App extends Component {
           />
           <Footer
             todos={visibleTodos}
-            clearCompleted={this.clearCompleted}
             filter={this.state.filter}
+            clearCompleted={this.clearCompleted}
             onFilterChange={this.onFilterChange}
           />
         </section>

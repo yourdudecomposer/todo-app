@@ -1,6 +1,6 @@
 import './NewTaskForm.css';
 import React from 'react';
-
+import PropTypes from 'prop-types'
 
 
 export default class NewTaskForm extends React.Component {
@@ -8,14 +8,13 @@ export default class NewTaskForm extends React.Component {
         label: '',
     }
 
-    addTodo = (e) => {
-        e.preventDefault();
-        this.props.addTodo(this.state.label);
-        this.setState({
-            label: ''
-        })
+    static defaultProps = {
+        addTodo: () => { }
     }
-    
+    static propTypes = {
+        addTodo: PropTypes.func
+    }
+
     onTodoInput = (e) => {
         this.setState({
             label: e.target.value
@@ -24,7 +23,13 @@ export default class NewTaskForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.addTodo}>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                this.props.addTodo(this.state.label);
+                this.setState({
+                    label: ''
+                })
+            }}>
                 <input
                     className="new-todo"
                     placeholder="What needs to be done?"

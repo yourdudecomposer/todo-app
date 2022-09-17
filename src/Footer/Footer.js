@@ -1,5 +1,6 @@
 import './Footer.css';
 import TaskFilter from '../TasksFilter/TasksFilter';
+import PropTypes from 'prop-types';
 
 function Footer(props) {
     const count = props.todos.filter(el => !el.isCompleted).length;
@@ -16,4 +17,23 @@ function Footer(props) {
     )
 }
 
+Footer.defaultProps = {
+    todos: [],
+    filter: 'all',
+    clearCompleted: () => { },
+    onFilterChange: () => { },
+}
+
+Footer.propTypes = {
+    todos: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string,
+        isCompleted: PropTypes.bool,
+        isEditing: PropTypes.bool,
+        id: PropTypes.number,
+        date: PropTypes.instanceOf(Date)
+    })),
+    filter: PropTypes.string,
+    clearCompleted: PropTypes.func,
+    onFilterChange: PropTypes.func,
+}
 export default Footer;
