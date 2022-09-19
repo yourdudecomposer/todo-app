@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 import './App.css';
 
-import Header from '../Header/Header';
-import TaskList from '../TaskList/TaskList';
-import Footer from '../Footer/Footer';
+import Header from '../Header';
+import TaskList from '../TaskList';
+import Footer from '../Footer';
 export default class App extends Component {
   state = {
     todos: [
@@ -12,11 +12,10 @@ export default class App extends Component {
       { label: 'Editing task', isCompleted: false, isEditing: true, id: 2, date: new Date() },
       { label: 'Active task', isCompleted: false, isEditing: false, id: 3, date: new Date() },
     ],
-    filter: 'all'
-  }
+    filter: 'all',
+  };
 
   todoId = 4;
-
 
   addTodo = (label) => {
     const newItem = {
@@ -24,19 +23,15 @@ export default class App extends Component {
       isCompleted: false,
       isEditing: false,
       id: this.todoId++,
-      date: new Date()
-    }
-    this.setState(state => {
-      const newArr = [
-        ...state.todos,
-        newItem
-      ]
+      date: new Date(),
+    };
+    this.setState((state) => {
+      const newArr = [...state.todos, newItem];
       return {
-        todos: newArr
-      }
-    })
-  }
-
+        todos: newArr,
+      };
+    });
+  };
 
   filter = (items, filter) => {
     switch (filter) {
@@ -44,111 +39,96 @@ export default class App extends Component {
         return items;
 
       case 'active':
-        return items.filter(item => !item.isCompleted);
+        return items.filter((item) => !item.isCompleted);
 
       case 'done':
-        return items.filter(item => item.isCompleted);;
+        return items.filter((item) => item.isCompleted);
 
       default:
         return items;
-
     }
-  }
-
+  };
 
   onFilterChange = (filter) => {
-    this.setState({ filter })
-  }
-
+    this.setState({ filter });
+  };
 
   toggleComplete = (id) => {
-    this.setState(state => {
+    this.setState((state) => {
       let newArray = state.todos.map((todo) => {
         if (todo.id === id) {
-          return { ...todo, isCompleted: !todo.isCompleted }
-        };
+          return { ...todo, isCompleted: !todo.isCompleted };
+        }
         return { ...todo };
-      })
-      return { todos: newArray }
-    })
-  }
+      });
+      return { todos: newArray };
+    });
+  };
 
   deleteTodo = (id) => {
-    this.setState(state => {
-      const idx = state.todos.findIndex(el => el.id === id);
+    this.setState((state) => {
+      const idx = state.todos.findIndex((el) => el.id === id);
 
-      const newArray = [
-        ...state.todos.slice(0, idx),
-        ...state.todos.slice(idx + 1)
-      ]
+      const newArray = [...state.todos.slice(0, idx), ...state.todos.slice(idx + 1)];
       return {
-        todos: newArray
-      }
-    })
-  }
-
+        todos: newArray,
+      };
+    });
+  };
 
   clearCompleted = () => {
-    this.setState(state => {
-      const newArr = state.todos.filter(el => !el.isCompleted);
+    this.setState((state) => {
+      const newArr = state.todos.filter((el) => !el.isCompleted);
       return {
-        todos: newArr
-      }
-    })
-  }
+        todos: newArr,
+      };
+    });
+  };
 
   saveEditingTodoSave = (e, id, label) => {
     if (e.keyCode === 13) {
-      this.setState(state => {
-        const idx = state.todos.findIndex(el => el.id === id);
-        const newItem = { ...state.todos[idx], isEditing: false, label }
-        const newArray = [
-          ...state.todos.slice(0, idx),
-          newItem,
-          ...state.todos.slice(idx + 1)
-        ]
+      this.setState((state) => {
+        const idx = state.todos.findIndex((el) => el.id === id);
+        const newItem = { ...state.todos[idx], isEditing: false, label };
+        const newArray = [...state.todos.slice(0, idx), newItem, ...state.todos.slice(idx + 1)];
         return {
-          todos: newArray
-        }
-      })
+          todos: newArray,
+        };
+      });
     }
-  }
+  };
 
   startEditTodo = (id) => {
-    this.setState(state => {
+    this.setState((state) => {
       let newArray = state.todos.map((todo) => {
         if (todo.id === id) {
-          return { ...todo, isEditing: true }
-        };
+          return { ...todo, isEditing: true };
+        }
         return { ...todo };
-      })
-      return { todos: newArray }
-    })
-  }
+      });
+      return { todos: newArray };
+    });
+  };
 
   saveEditingTodo = (e, id, text) => {
     if (e.keyCode === 13) {
-      this.setState(state => {
-        const idx = state.todos.findIndex(el => el.id === id);
-        const newItem = { ...state.todos[idx], isEditing: false, label: text }
-        const newArray = [
-          ...state.todos.slice(0, idx),
-          newItem,
-          ...state.todos.slice(idx + 1)
-        ]
+      this.setState((state) => {
+        const idx = state.todos.findIndex((el) => el.id === id);
+        const newItem = { ...state.todos[idx], isEditing: false, label: text };
+        const newArray = [...state.todos.slice(0, idx), newItem, ...state.todos.slice(idx + 1)];
         return {
-          todos: newArray
-        }
-      })
+          todos: newArray,
+        };
+      });
     }
-  }
+  };
 
   render() {
     const visibleTodos = this.filter(this.state.todos, this.state.filter);
     return (
-      <section className='todoapp'>
+      <section className="todoapp">
         <Header addTodo={this.addTodo} />
-        <section className='main'>
+        <section className="main">
           <TaskList
             todos={visibleTodos}
             toggleComplete={this.toggleComplete}
@@ -163,8 +143,7 @@ export default class App extends Component {
             onFilterChange={this.onFilterChange}
           />
         </section>
-
       </section>
-    )
+    );
   }
 }
