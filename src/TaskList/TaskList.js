@@ -25,7 +25,15 @@ export default class TaskList extends Component {
 }
 
 TaskList.defaultProps = {
-  todos: [{ label: 'something wrong', isCompleted: false, isEditing: false, id: 0, date: new Date(-8640000000000000) }],
+  todos: [
+    {
+      label: 'something wrong',
+      isCompleted: false,
+      isEditing: false,
+      id: 0,
+      date: new Date(-8640000000000000),
+    },
+  ],
   toggleComplete: () => {},
   deleteTodo: () => {},
   saveEditingTodo: () => {},
