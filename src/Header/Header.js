@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import NewTaskForm from '../NewTaskForm';
-
 function Header(props) {
   return (
     <header className="header">
@@ -12,7 +11,6 @@ function Header(props) {
     </header>
   );
 }
-
 Header.defaultProps = {
   addTodo: () => {},
 };
