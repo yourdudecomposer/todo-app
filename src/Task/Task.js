@@ -3,6 +3,8 @@ import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Timer from '../Timer/Timer';
+
 export default class Task extends React.Component {
   static defaultProps = {
     id: 0,
@@ -67,6 +69,7 @@ export default class Task extends React.Component {
             <span className="description" onClick={this.props.toggleComplete}>
               {this.props.label}
             </span>
+            <Timer />
             <span className="created">created {this.timeAgo}</span>
           </label>
           <button className="icon icon-edit" onClick={() => this.props.startEditTodo(this.props.id)}></button>

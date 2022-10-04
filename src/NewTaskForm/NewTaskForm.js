@@ -23,6 +23,7 @@ export default class NewTaskForm extends React.Component {
   render() {
     return (
       <form
+        className="new-todo-form"
         onSubmit={(e) => {
           e.preventDefault();
           this.props.addTodo(this.state.label);
@@ -31,13 +32,9 @@ export default class NewTaskForm extends React.Component {
           });
         }}
       >
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus
-          onChange={this.onTodoInput}
-          value={this.state.label}
-        />
+        <input className="new-todo" placeholder="Task" autoFocus onChange={this.onTodoInput} value={this.state.label} />
+        <input className="new-todo-form__timer" placeholder="Min" autoFocus />
+        <input className="new-todo-form__timer" placeholder="Sec" autoFocus />
       </form>
     );
   }
