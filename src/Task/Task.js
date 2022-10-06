@@ -73,7 +73,7 @@ export default class Task extends React.Component {
             <span className="title" onClick={this.props.toggleComplete}>
               {this.props.label}
             </span>
-            <Timer min={this.props.timer.min} sec={this.props.timer.sec} />
+            <Timer isCompleted={this.props.isCompleted} min={this.props.timer.min} sec={this.props.timer.sec} />
             <span className="description">created {this.timeAgo}</span>
           </label>
           <button className="icon icon-edit" onClick={() => this.props.startEditTodo(this.props.id)}></button>

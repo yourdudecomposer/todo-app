@@ -12,10 +12,7 @@ export default class Timer extends React.Component {
   }
 
   play = () => {
-    if (!this.state.isPlaing) {
-      this.setState({
-        isPlaing: true,
-      });
+    if (!this.props.isCompleted) {
       this.timerId = setInterval(() => {
         if (this.state.sec > 0) {
           this.setState(({ sec }) => ({
@@ -37,9 +34,6 @@ export default class Timer extends React.Component {
   };
   pause = () => {
     clearInterval(this.timerId);
-    this.setState({
-      isPlaing: false,
-    });
   };
 
   render() {
