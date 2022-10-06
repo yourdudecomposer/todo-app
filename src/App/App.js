@@ -8,22 +8,55 @@ import Footer from '../Footer';
 export default class App extends Component {
   state = {
     todos: [
-      { label: 'Completed task', isCompleted: true, isEditing: false, id: 1, date: new Date() },
-      { label: 'Editing task', isCompleted: false, isEditing: true, id: 2, date: new Date() },
-      { label: 'Active task', isCompleted: false, isEditing: false, id: 3, date: new Date() },
+      {
+        label: 'Completed task',
+        isCompleted: true,
+        isEditing: false,
+        id: 1,
+        date: new Date(),
+        timer: {
+          min: null,
+          sec: null,
+        },
+      },
+      {
+        label: 'Editing task',
+        isCompleted: false,
+        isEditing: true,
+        id: 2,
+        date: new Date(),
+        timer: {
+          min: null,
+          sec: null,
+        },
+      },
+      {
+        label: 'Active task',
+        isCompleted: false,
+        isEditing: false,
+        id: 3,
+        date: new Date(),
+        timer: {
+          min: null,
+          sec: null,
+        },
+      },
     ],
     filter: 'all',
   };
 
   todoId = 4;
 
-  addTodo = (label) => {
+  addTodo = (todo) => {
+    const [label, min, sec] = Array.from(todo).map((el) => el.value);
     const newItem = {
       label,
       isCompleted: false,
       isEditing: false,
       id: this.todoId++,
       date: new Date(),
+      min,
+      sec,
     };
     this.setState((state) => {
       const newArr = [...state.todos, newItem];

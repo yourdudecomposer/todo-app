@@ -1,3 +1,7 @@
+input[type='submit'] {
+  display: none;
+}
+
 .new-todo-form {
   display: flex;
   margin-bottom: 0;
