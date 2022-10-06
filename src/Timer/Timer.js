@@ -8,7 +8,6 @@ export default class Timer extends React.Component {
   };
 
   componentWillUnmount() {
-    console.log('cleared');
     clearInterval(this.timerId);
   }
 
@@ -45,7 +44,6 @@ export default class Timer extends React.Component {
 
   render() {
     const { min, sec } = this.state;
-
     return (
       <span className="description">
         <button onClick={this.play} className="icon icon-play"></button>

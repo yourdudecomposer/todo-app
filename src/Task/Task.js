@@ -12,8 +12,10 @@ export default class Task extends React.Component {
     isEditing: false,
     label: 'something wrong',
     date: new Date(-8640000000000000),
-    min: 0,
-    sec: 0,
+    timer: {
+      min: 0,
+      sec: 0,
+    },
     toggleComplete: () => {},
     deleteTodo: () => {},
     saveEditingTodo: () => {},
@@ -71,7 +73,7 @@ export default class Task extends React.Component {
             <span className="title" onClick={this.props.toggleComplete}>
               {this.props.label}
             </span>
-            <Timer min={this.props.min} sec={this.props.sec} />
+            <Timer min={this.props.timer.min} sec={this.props.timer.sec} />
             <span className="description">created {this.timeAgo}</span>
           </label>
           <button className="icon icon-edit" onClick={() => this.props.startEditTodo(this.props.id)}></button>

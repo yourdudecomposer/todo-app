@@ -15,8 +15,8 @@ export default class App extends Component {
         id: 1,
         date: new Date(),
         timer: {
-          min: null,
-          sec: null,
+          min: 0,
+          sec: 3,
         },
       },
       {
@@ -26,8 +26,8 @@ export default class App extends Component {
         id: 2,
         date: new Date(),
         timer: {
-          min: null,
-          sec: null,
+          min: 1,
+          sec: 3,
         },
       },
       {
@@ -37,8 +37,8 @@ export default class App extends Component {
         id: 3,
         date: new Date(),
         timer: {
-          min: null,
-          sec: null,
+          min: 3,
+          sec: 23,
         },
       },
     ],
@@ -55,8 +55,10 @@ export default class App extends Component {
       isEditing: false,
       id: this.todoId++,
       date: new Date(),
-      min,
-      sec,
+      timer: {
+        min: Number(min),
+        sec: Number(sec),
+      },
     };
     this.setState((state) => {
       const newArr = [...state.todos, newItem];

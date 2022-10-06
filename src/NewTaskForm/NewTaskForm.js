@@ -27,7 +27,6 @@ export default class NewTaskForm extends React.Component {
     });
   };
   onSecInput = (e) => {
-    console.log(this.state);
     this.setState({
       sec: e.target.value,
     });
@@ -47,12 +46,18 @@ export default class NewTaskForm extends React.Component {
           });
         }}
       >
-        <input className="new-todo" placeholder="Task" autoFocus onChange={this.onTodoInput} value={this.state.label} />
+        <input
+          required
+          className="new-todo"
+          placeholder="Task"
+          autoFocus
+          onChange={this.onTodoInput}
+          value={this.state.label}
+        />
         <input
           type="number"
           className="new-todo-form__timer"
           placeholder="Min"
-          autoFocus
           onChange={this.onMinInput}
           value={this.state.min}
         />
@@ -60,7 +65,6 @@ export default class NewTaskForm extends React.Component {
           type="number"
           className="new-todo-form__timer"
           placeholder="Sec"
-          autoFocus
           onChange={this.onSecInput}
           value={this.state.sec}
         />

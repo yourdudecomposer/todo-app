@@ -32,6 +32,10 @@ TaskList.defaultProps = {
       isEditing: false,
       id: 0,
       date: new Date(-8640000000000000),
+      timer: {
+        min: 0,
+        sec: 0,
+      },
     },
   ],
   toggleComplete: () => {},
@@ -48,6 +52,10 @@ TaskList.propTypes = {
       isEditing: PropTypes.bool,
       id: PropTypes.number,
       date: PropTypes.instanceOf(Date),
+      timer: PropTypes.shape({
+        min: PropTypes.number,
+        sec: PropTypes.number,
+      }),
     })
   ),
   toggleComplete: PropTypes.func,
