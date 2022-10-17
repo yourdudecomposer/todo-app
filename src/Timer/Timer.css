@@ -7,6 +7,7 @@
 
 .todo-list li .icon-play {
   font-size: 15px;
+
 }
 
 .icon-pause:after {
@@ -15,4 +16,10 @@
 
 .icon-play:after {
   content: '▶';
+}
+
+.time{
+  display: inline-block;
+  position: relative;
+  left: 3px;
 }

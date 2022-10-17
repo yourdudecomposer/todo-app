@@ -1,27 +1,25 @@
 import './TaskList.css';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Task from '../Task';
 
-export default class TaskList extends Component {
-  render() {
-    this.elements = this.props.todos.map((obj) => {
-      const { id, ...rest } = obj;
-      return (
-        <Task
-          key={id}
-          id={id}
-          {...rest}
-          toggleComplete={() => this.props.toggleComplete(id)}
-          deleteTodo={() => this.props.deleteTodo(id)}
-          saveEditingTodo={this.props.saveEditingTodo}
-          startEditTodo={this.props.startEditTodo}
-        />
-      );
-    });
-    return <ul className="todo-list">{this.elements}</ul>;
-  }
+export default function TaskList(props) {
+  const elements = props.todos.map((obj) => {
+    const { id, ...rest } = obj;
+    return (
+      <Task
+        key={id}
+        id={id}
+        {...rest}
+        toggleComplete={() => props.toggleComplete(id)}
+        deleteTodo={() => props.deleteTodo(id)}
+        saveEditingTodo={props.saveEditingTodo}
+        startEditTodo={props.startEditTodo}
+      />
+    );
+  });
+  return <ul className="todo-list">{elements}</ul>;
 }
 
 TaskList.defaultProps = {
@@ -32,10 +30,7 @@ TaskList.defaultProps = {
       isEditing: false,
       id: 0,
       date: new Date(-8640000000000000),
-      timer: {
-        min: 0,
-        sec: 0,
-      },
+      timer: 0,
     },
   ],
   toggleComplete: () => {},
@@ -52,10 +47,7 @@ TaskList.propTypes = {
       isEditing: PropTypes.bool,
       id: PropTypes.number,
       date: PropTypes.instanceOf(Date),
-      timer: PropTypes.shape({
-        min: PropTypes.number,
-        sec: PropTypes.number,
-      }),
+      timer: PropTypes.number,
     })
   ),
   toggleComplete: PropTypes.func,

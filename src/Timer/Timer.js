@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Timer.css';
 export default function Timer(props) {
-  const [min, setMin] = useState(props.min);
-  const [sec, setSec] = useState(props.sec);
+  const [timeLeft, setTimeLeft] = useState(props.timer);
+  const [isCounting, setIsCounting] = useState(false);
 
-  // state = {
-  //   min: this.props.min,
-  //   sec: this.props.sec,
-  //   isPlaing: false,
-  // };
+  const min = Math.floor(timeLeft / 60);
+  const sec = timeLeft % 60;
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timerId);
-  // }
+  useEffect(() => {
+    let timerId;
+    if (isCounting && !props.isCompleted) {
+      timerId = setInterval(() => {
+        setTimeLeft((timeLeft) => (timeLeft >= 1 ? timeLeft - 1 : 0));
+      }, 1000);
+    }
 
-  let timerId;
+    if (timeLeft === 0) {
+      clearInterval(timerId);
+    }
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [isCounting, props.isCompleted, timeLeft]);
+
   const play = () => {
     if (!props.isCompleted) {
-      timerId = setInterval(() => {
-        if (sec > 0) setSec((sec) => sec - 1);
-        if (sec === 0) {
-          if (min === 0) {
-            clearInterval(timerId);
-          } else {
-            setSec(59);
-            setMin((min) => min - 1);
-          }
-        }
-      }, 1000);
+      setIsCounting(true);
     }
   };
 
   const pause = () => {
-    clearInterval(timerId);
+    setIsCounting(false);
   };
 
   return (
     <span className="description">
       <button onClick={play} className="icon icon-play"></button>
       <button onClick={pause} className="icon icon-pause"></button>
-      {min.toString().padStart(2, 0)}:{sec.toString().padStart(2, 0)}
+      <div className="time">
+        {min.toString().padStart(2, 0)}:{sec.toString().padStart(2, 0)}
+      </div>
     </span>
   );
 }

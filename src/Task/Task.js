@@ -31,11 +31,11 @@ export default function Task(props) {
     <li className={liClass}>
       <div className="view">
         <input className="toggle" checked={props.isCompleted} type="checkbox" onChange={props.toggleComplete} />
-        <label>
+        <label htmlFor="">
           <span className="title" onClick={props.toggleComplete}>
             {label}
           </span>
-          <Timer isCompleted={props.isCompleted} min={props.timer.min} sec={props.timer.sec} />
+          <Timer isCompleted={props.isCompleted} timer={props.timer} />
           <span className="description">created {timeAgo}</span>
         </label>
         <button className="icon icon-edit" onClick={() => props.startEditTodo(props.id)}></button>
@@ -58,10 +58,7 @@ Task.defaultProps = {
   isEditing: false,
   label: 'something wrong',
   date: new Date(-8640000000000000),
-  timer: {
-    min: 0,
-    sec: 0,
-  },
+  timer: 0,
   toggleComplete: () => {},
   deleteTodo: () => {},
   saveEditingTodo: () => {},
@@ -69,6 +66,7 @@ Task.defaultProps = {
 };
 
 Task.propTypes = {
+  timer: PropTypes.number,
   id: PropTypes.number,
   isCompleted: PropTypes.bool,
   isEditing: PropTypes.bool,
