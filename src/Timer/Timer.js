@@ -1,49 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Timer.css';
-export default class Timer extends React.Component {
-  state = {
-    min: this.props.min,
-    sec: this.props.sec,
-    isPlaing: false,
-  };
+export default function Timer(props) {
+  const [min, setMin] = useState(props.min);
+  const [sec, setSec] = useState(props.sec);
 
-  componentWillUnmount() {
-    clearInterval(this.timerId);
-  }
+  // state = {
+  //   min: this.props.min,
+  //   sec: this.props.sec,
+  //   isPlaing: false,
+  // };
 
-  play = () => {
-    if (!this.props.isCompleted) {
-      this.timerId = setInterval(() => {
-        if (this.state.sec > 0) {
-          this.setState(({ sec }) => ({
-            sec: sec - 1,
-          }));
-        }
-        if (this.state.sec === 0) {
-          if (this.state.min === 0) {
-            clearInterval(this.timerId);
+  // componentWillUnmount() {
+  //   clearInterval(this.timerId);
+  // }
+
+  let timerId;
+  const play = () => {
+    if (!props.isCompleted) {
+      timerId = setInterval(() => {
+        if (sec > 0) setSec((sec) => sec - 1);
+        if (sec === 0) {
+          if (min === 0) {
+            clearInterval(timerId);
           } else {
-            this.setState(({ min }) => ({
-              min: min - 1,
-              sec: 59,
-            }));
+            setSec(59);
+            setMin((min) => min - 1);
           }
         }
       }, 1000);
     }
   };
-  pause = () => {
-    clearInterval(this.timerId);
+
+  const pause = () => {
+    clearInterval(timerId);
   };
 
-  render() {
-    const { min, sec } = this.state;
-    return (
-      <span className="description">
-        <button onClick={this.play} className="icon icon-play"></button>
-        <button onClick={this.pause} className="icon icon-pause"></button>
-        {min.toString().padStart(2, 0)}:{sec.toString().padStart(2, 0)}
-      </span>
-    );
-  }
+  return (
+    <span className="description">
+      <button onClick={play} className="icon icon-play"></button>
+      <button onClick={pause} className="icon icon-pause"></button>
+      {min.toString().padStart(2, 0)}:{sec.toString().padStart(2, 0)}
+    </span>
+  );
 }
