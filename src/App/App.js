@@ -12,7 +12,7 @@ export default function App() {
       isCompleted: true,
       isEditing: false,
       id: 1,
-      date: new Date(),
+      date: new Date('1991-11-22'),
       timer: 3,
     },
     {
@@ -20,7 +20,7 @@ export default function App() {
       isCompleted: false,
       isEditing: true,
       id: 2,
-      date: new Date(),
+      date: new Date(0),
       timer: 63,
     },
     {
@@ -28,26 +28,30 @@ export default function App() {
       isCompleted: false,
       isEditing: false,
       id: 3,
-      date: new Date(),
+      date: new Date(8.6e15),
       timer: 203,
     },
   ]);
 
   const [filter, setFilter] = useState('all');
 
-  let todoId = todos[todos.length - 1].id + 1;
+  let todoId = todos[todos.length - 1]?.id + 1 || 0;
 
-  const addTodo = (todo) => {
-    const [label, min, sec] = Array.from(todo).map((el) => el.value);
-    const newItem = {
+  const createTodo = (label, timer) => {
+    return {
       label,
       isCompleted: false,
       isEditing: false,
       id: todoId,
       date: new Date(),
-      timer: min * 60 + Number(sec),
+      timer,
     };
+  };
 
+  const addTodo = (todo) => {
+    const [label, min, sec] = Array.from(todo).map((el) => el.value);
+    const timer = min * 60 + Number(sec);
+    const newItem = createTodo(label, timer);
     setTodos((state) => [...state, newItem]);
   };
 

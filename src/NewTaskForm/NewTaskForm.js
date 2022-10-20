@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function NewTaskForm(props) {
+  const { addTodo } = props;
   const [label, setLabel] = useState('');
   const [min, setMin] = useState('');
   const [sec, setSec] = useState('');
@@ -17,17 +18,16 @@ export default function NewTaskForm(props) {
     setSec(e.target.value);
   };
 
+  const submitTheForm = (e) => {
+    e.preventDefault();
+    addTodo(e.target);
+    setLabel('');
+    setMin('');
+    setSec('');
+  };
+
   return (
-    <form
-      className="new-todo-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.addTodo(e.target);
-        setLabel('');
-        setMin('');
-        setSec('');
-      }}
-    >
+    <form className="new-todo-form" onSubmit={submitTheForm}>
       <input required className="new-todo" placeholder="Task" autoFocus onChange={onTodoInput} value={label} />
       <input
         type="number"

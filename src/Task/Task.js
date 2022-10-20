@@ -6,47 +6,49 @@ import PropTypes from 'prop-types';
 import Timer from '../Timer/Timer';
 
 export default function Task(props) {
-  const timeAgo = formatDistanceToNow(props.date, {
+  const { id, isCompleted, isEditing, label, date, timer, toggleComplete, deleteTodo, saveEditingTodo, startEditTodo } =
+    props;
+  const timeAgo = formatDistanceToNow(date, {
     includeSeconds: true,
     addSuffix: true,
   });
 
   let liClass = '';
 
-  const [label, setLabel] = useState(props.label);
+  const [title, setTitle] = useState(label);
 
   const updateState = (e) => {
-    setLabel(e.target.value);
+    setTitle(e.target.value);
   };
 
-  if (props.isCompleted && props.isEditing) {
+  if (isCompleted && isEditing) {
     liClass = 'editing';
-  } else if (props.isCompleted) {
+  } else if (isCompleted) {
     liClass = 'completed';
-  } else if (props.isEditing) {
+  } else if (isEditing) {
     liClass = 'editing';
   } else liClass = '';
 
   return (
     <li className={liClass}>
       <div className="view">
-        <input className="toggle" checked={props.isCompleted} type="checkbox" onChange={props.toggleComplete} />
+        <input className="toggle" checked={isCompleted} type="checkbox" onChange={toggleComplete} />
         <label htmlFor="">
-          <span className="title" onClick={props.toggleComplete}>
-            {label}
+          <span className="title" onClick={toggleComplete}>
+            {title}
           </span>
-          <Timer isCompleted={props.isCompleted} timer={props.timer} />
+          <Timer isCompleted={isCompleted} timer={timer} />
           <span className="description">created {timeAgo}</span>
         </label>
-        <button className="icon icon-edit" onClick={() => props.startEditTodo(props.id)}></button>
-        <button className="icon icon-destroy" onClick={props.deleteTodo}></button>
+        <button className="icon icon-edit" onClick={() => startEditTodo(id)}></button>
+        <button className="icon icon-destroy" onClick={deleteTodo}></button>
       </div>
       <input
         type="text"
         onChange={updateState}
         className="edit"
-        value={label}
-        onKeyDown={(e) => props.saveEditingTodo(e, props.id, label)}
+        value={title}
+        onKeyDown={(e) => saveEditingTodo(e, id, label)}
       />
     </li>
   );

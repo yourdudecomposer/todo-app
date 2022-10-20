@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import NewTaskForm from '../NewTaskForm';
 
 function Header(props) {
+  const { addTodo } = props;
   return (
     <header className="header">
       <h1>todos</h1>
-      <NewTaskForm addTodo={props.addTodo} />
+      <NewTaskForm addTodo={addTodo} />
     </header>
   );
 }

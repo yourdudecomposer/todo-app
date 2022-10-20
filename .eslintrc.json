@@ -27,6 +27,7 @@
     },
     "plugins": ["react", "prettier", "import"],
     "rules": {
+      "react/destructuring-assignment": 2,
       "no-console": 1,
       "prettier/prettier": "error",
       "linebreak-style": [0, "unix"],

@@ -5,17 +5,19 @@ import PropTypes from 'prop-types';
 import Task from '../Task';
 
 export default function TaskList(props) {
-  const elements = props.todos.map((obj) => {
+  const { toggleComplete, deleteTodo, saveEditingTodo, startEditTodo, todos } = props;
+
+  const elements = todos.map((obj) => {
     const { id, ...rest } = obj;
     return (
       <Task
         key={id}
         id={id}
         {...rest}
-        toggleComplete={() => props.toggleComplete(id)}
-        deleteTodo={() => props.deleteTodo(id)}
-        saveEditingTodo={props.saveEditingTodo}
-        startEditTodo={props.startEditTodo}
+        toggleComplete={() => toggleComplete(id)}
+        deleteTodo={() => deleteTodo(id)}
+        saveEditingTodo={saveEditingTodo}
+        startEditTodo={startEditTodo}
       />
     );
   });

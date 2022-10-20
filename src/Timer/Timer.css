@@ -22,3 +22,11 @@
   position: relative;
   left: 3px;
 }
+
+.todo-list li .icon-play:hover.icon-play:disabled {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.todo-list li .icon-play:disabled {
+  color: rgba(0, 0, 0, 0.3);
+}
