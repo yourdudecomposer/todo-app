@@ -24,9 +24,9 @@
 }
 
 .todo-list li .icon-play:hover.icon-play:disabled {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.24);
 }
 
 .todo-list li .icon-play:disabled {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.24);
 }

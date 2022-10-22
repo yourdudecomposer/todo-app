@@ -31,7 +31,7 @@ Footer.propTypes = {
       label: PropTypes.string,
       isCompleted: PropTypes.bool,
       isEditing: PropTypes.bool,
-      id: PropTypes.number,
+      id: PropTypes.string,
       date: PropTypes.instanceOf(Date),
     })
   ),

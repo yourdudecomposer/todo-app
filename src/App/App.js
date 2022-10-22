@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
 
@@ -10,39 +11,38 @@ export default function App() {
     {
       label: 'Completed task',
       isCompleted: true,
-      isEditing: false,
-      id: 1,
+      id: uuidv4(),
       date: new Date('1991-11-22'),
       timer: 3,
     },
     {
       label: 'Editing task',
       isCompleted: false,
-      isEditing: true,
-      id: 2,
+      id: uuidv4(),
       date: new Date(0),
       timer: 63,
     },
     {
       label: 'Active task',
       isCompleted: false,
-      isEditing: false,
-      id: 3,
-      date: new Date(8.6e15),
+      id: uuidv4(),
+      date: new Date(8.64e15),
       timer: 203,
     },
   ]);
 
   const [filter, setFilter] = useState('all');
+  const [visibleTodos, setVisibleTodos] = useState(todos);
 
-  let todoId = todos[todos.length - 1]?.id + 1 || 0;
+  useEffect(() => {
+    setVisibleTodos(filterFunc(todos, filter));
+  }, [filter, todos]);
 
   const createTodo = (label, timer) => {
     return {
       label,
       isCompleted: false,
-      isEditing: false,
-      id: todoId,
+      id: uuidv4(),
       date: new Date(),
       timer,
     };
@@ -74,17 +74,15 @@ export default function App() {
   const onFilterChange = (filter) => {
     setFilter(filter);
   };
-
   const toggleComplete = (id) => {
-    setTodos((todos) => {
-      let newArray = todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, isCompleted: !todo.isCompleted };
-        }
-        return { ...todo };
-      });
-      return newArray;
+    const newArray = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, isCompleted: !todo.isCompleted };
+      }
+      return { ...todo };
     });
+
+    setTodos(newArray);
   };
 
   const deleteTodo = (id) => {
@@ -117,16 +115,13 @@ export default function App() {
 
   const saveEditingTodo = (e, id, text) => {
     if (e.keyCode === 13) {
-      setTodos((todos) => {
-        const idx = todos.findIndex((el) => el.id === id);
-        const newItem = { ...todos[idx], isEditing: false, label: text };
-        const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
-        return newArray;
-      });
+      const idx = todos.findIndex((el) => el.id === id);
+      const newItem = { ...todos[idx], label: text };
+      const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
+      setTodos(newArray);
     }
   };
 
-  const visibleTodos = filterFunc(todos, filter);
   return (
     <section className="todoapp">
       <Header addTodo={addTodo} />

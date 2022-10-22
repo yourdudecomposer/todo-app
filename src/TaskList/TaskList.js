@@ -29,8 +29,7 @@ TaskList.defaultProps = {
     {
       label: 'something wrong',
       isCompleted: false,
-      isEditing: false,
-      id: 0,
+      id: '',
       date: new Date(-8640000000000000),
       timer: 0,
     },
@@ -46,8 +45,7 @@ TaskList.propTypes = {
     PropTypes.shape({
       label: PropTypes.string,
       isCompleted: PropTypes.bool,
-      isEditing: PropTypes.bool,
-      id: PropTypes.number,
+      id: PropTypes.string,
       date: PropTypes.instanceOf(Date),
       timer: PropTypes.number,
     })
