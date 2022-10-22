@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Timer from '../Timer/Timer';
 
 export default function Task(props) {
-  const { id, isCompleted, label, date, timer, toggleComplete, deleteTodo, saveEditingTodo } = props;
+  const { id, isCompleted, label, date, timer, toggleComplete, deleteTodo, edit } = props;
   const timeAgo = formatDistanceToNow(date, {
     includeSeconds: true,
     addSuffix: true,
@@ -28,8 +28,8 @@ export default function Task(props) {
   const onPressEnter = (e) => {
     if (e.keyCode === 13) {
       setIsEdit(false);
+      edit(id, title);
     }
-    saveEditingTodo(e, id, title);
   };
   useEffect(() => {
     isEdit ? setLiClass2('editing') : setLiClass2('');
@@ -66,8 +66,7 @@ Task.defaultProps = {
   timer: 0,
   toggleComplete: () => {},
   deleteTodo: () => {},
-  saveEditingTodo: () => {},
-  startEditTodo: () => {},
+  edit: () => {},
 };
 
 Task.propTypes = {
@@ -79,6 +78,5 @@ Task.propTypes = {
   date: PropTypes.instanceOf(Date),
   toggleComplete: PropTypes.func,
   deleteTodo: PropTypes.func,
-  saveEditingTodo: PropTypes.func,
-  startEditTodo: PropTypes.func,
+  edit: PropTypes.func,
 };

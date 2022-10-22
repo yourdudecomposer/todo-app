@@ -12,7 +12,7 @@ export default function App() {
       label: 'Completed task',
       isCompleted: true,
       id: uuidv4(),
-      date: new Date('1991-11-22'),
+      date: new Date('2000-01-01'),
       timer: 3,
     },
     {
@@ -101,38 +101,18 @@ export default function App() {
     });
   };
 
-  const startEditTodo = (id) => {
-    setTodos((todos) => {
-      let newArray = todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, isEditing: true };
-        }
-        return { ...todo };
-      });
-      return newArray;
-    });
-  };
-
-  const saveEditingTodo = (e, id, text) => {
-    if (e.keyCode === 13) {
-      const idx = todos.findIndex((el) => el.id === id);
-      const newItem = { ...todos[idx], label: text };
-      const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
-      setTodos(newArray);
-    }
+  const edit = (id, text) => {
+    const idx = todos.findIndex((el) => el.id === id);
+    const newItem = { ...todos[idx], label: text };
+    const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
+    setTodos(newArray);
   };
 
   return (
     <section className="todoapp">
       <Header addTodo={addTodo} />
       <section className="main">
-        <TaskList
-          todos={visibleTodos}
-          toggleComplete={toggleComplete}
-          deleteTodo={deleteTodo}
-          saveEditingTodo={saveEditingTodo}
-          startEditTodo={startEditTodo}
-        />
+        <TaskList todos={visibleTodos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} edit={edit} />
         <Footer todos={visibleTodos} filter={filter} clearCompleted={clearCompleted} onFilterChange={onFilterChange} />
       </section>
     </section>

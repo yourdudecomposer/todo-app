@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Task from '../Task';
 
 export default function TaskList(props) {
-  const { toggleComplete, deleteTodo, saveEditingTodo, startEditTodo, todos } = props;
+  const { toggleComplete, deleteTodo, edit, todos } = props;
 
   const elements = todos.map((obj) => {
     const { id, ...rest } = obj;
@@ -16,8 +16,7 @@ export default function TaskList(props) {
         {...rest}
         toggleComplete={() => toggleComplete(id)}
         deleteTodo={() => deleteTodo(id)}
-        saveEditingTodo={saveEditingTodo}
-        startEditTodo={startEditTodo}
+        edit={edit}
       />
     );
   });
@@ -36,8 +35,7 @@ TaskList.defaultProps = {
   ],
   toggleComplete: () => {},
   deleteTodo: () => {},
-  saveEditingTodo: () => {},
-  startEditTodo: () => {},
+  edit: () => {},
 };
 
 TaskList.propTypes = {
@@ -52,6 +50,5 @@ TaskList.propTypes = {
   ),
   toggleComplete: PropTypes.func,
   deleteTodo: PropTypes.func,
-  saveEditingTodo: PropTypes.func,
-  startEditTodo: PropTypes.func,
+  edit: PropTypes.func,
 };
