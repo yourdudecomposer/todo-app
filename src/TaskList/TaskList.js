@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 
 import Task from '../Task';
 
-export default function TaskList(props) {
-  const { toggleComplete, deleteTodo, edit, todos } = props;
-
+export default function TaskList({ toggleComplete, deleteTodo, edit, todos }) {
   const elements = todos.map((obj) => {
     const { id, ...rest } = obj;
     return (
