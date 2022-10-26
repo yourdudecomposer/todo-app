@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import TaskFilter from '../TasksFilter';
 
-function Footer(props) {
-  const { todos, filter, clearCompleted, onFilterChange } = props;
-
+function Footer({ todos, filter, clearCompleted, onFilterChange }) {
   const count = todos.filter((el) => !el.isCompleted).length;
   return (
     <footer className="footer">

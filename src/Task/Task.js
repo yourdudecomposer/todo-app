@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 import Timer from '../Timer/Timer';
 
-export default function Task(props) {
-  const { id, isCompleted, label, date, timer, toggleComplete, deleteTodo, edit } = props;
+export default function Task({ id, isCompleted, label, date, timer, toggleComplete, deleteTodo, edit }) {
   const timeAgo = formatDistanceToNow(date, {
     includeSeconds: true,
     addSuffix: true,
@@ -40,19 +39,22 @@ export default function Task(props) {
 
   return (
     <li className={liClass2}>
-      <div className="view">
-        <input className="toggle" checked={isCompleted} type="checkbox" onChange={toggleComplete} />
-        <label htmlFor="">
-          <span className="title" onClick={toggleComplete}>
-            {title}
-          </span>
-          <Timer isCompleted={isCompleted} timer={timer} />
-          <span className="description">created {timeAgo}</span>
-        </label>
-        <button className="icon icon-edit" onClick={startEditTodo}></button>
-        <button className="icon icon-destroy" onClick={deleteTodo}></button>
-      </div>
-      <input type="text" onChange={updateState} className="edit" value={title} onKeyDown={(e) => onPressEnter(e)} />
+      {isEdit ? (
+        <input type="text" onChange={updateState} className="edit" value={title} onKeyDown={(e) => onPressEnter(e)} />
+      ) : (
+        <div className="view">
+          <input className="toggle" checked={isCompleted} type="checkbox" onChange={toggleComplete} />
+          <label htmlFor="">
+            <span className="title" onClick={toggleComplete}>
+              {title}
+            </span>
+            <Timer isCompleted={isCompleted} timer={timer} />
+            <span className="description">created {timeAgo}</span>
+          </label>
+          <button className="icon icon-edit" onClick={startEditTodo}></button>
+          <button className="icon icon-destroy" onClick={deleteTodo}></button>
+        </div>
+      )}
     </li>
   );
 }

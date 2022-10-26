@@ -48,11 +48,10 @@ export default function App() {
     };
   };
 
-  const addTodo = (todo) => {
-    const [label, min, sec] = Array.from(todo).map((el) => el.value);
-    const timer = min * 60 + Number(sec);
+  const addTodo = (label, timer) => {
     const newItem = createTodo(label, timer);
-    setTodos((state) => [...state, newItem]);
+    const newArr = [...todos, newItem];
+    setTodos(newArr);
   };
 
   const filterFunc = (items, filter) => {
@@ -86,19 +85,14 @@ export default function App() {
   };
 
   const deleteTodo = (id) => {
-    setTodos((todos) => {
-      const idx = todos.findIndex((el) => el.id === id);
-
-      const newArray = [...todos.slice(0, idx), ...todos.slice(idx + 1)];
-      return newArray;
-    });
+    const idx = todos.findIndex((el) => el.id === id);
+    const newArray = [...todos.slice(0, idx), ...todos.slice(idx + 1)];
+    setTodos(newArray);
   };
 
   const clearCompleted = () => {
-    setTodos((todos) => {
-      const newArr = todos.filter((el) => !el.isCompleted);
-      return newArr;
-    });
+    const newArr = todos.filter((el) => !el.isCompleted);
+    setTodos(newArr);
   };
 
   const edit = (id, text) => {
@@ -113,7 +107,7 @@ export default function App() {
       <Header addTodo={addTodo} />
       <section className="main">
         <TaskList todos={visibleTodos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} edit={edit} />
-        <Footer todos={visibleTodos} filter={filter} clearCompleted={clearCompleted} onFilterChange={onFilterChange} />
+        <Footer todos={todos} filter={filter} clearCompleted={clearCompleted} onFilterChange={onFilterChange} />
       </section>
     </section>
   );

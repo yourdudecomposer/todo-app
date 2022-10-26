@@ -2,8 +2,7 @@ import './NewTaskForm.css';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function NewTaskForm(props) {
-  const { addTodo } = props;
+export default function NewTaskForm({ addTodo }) {
   const [label, setLabel] = useState('');
   const [min, setMin] = useState('');
   const [sec, setSec] = useState('');
@@ -20,7 +19,8 @@ export default function NewTaskForm(props) {
 
   const submitTheForm = (e) => {
     e.preventDefault();
-    addTodo(e.target);
+    const timer = min * 60 + Number(sec);
+    addTodo(label, timer);
     setLabel('');
     setMin('');
     setSec('');

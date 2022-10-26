@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import NewTaskForm from '../NewTaskForm';
 
-function Header(props) {
-  const { addTodo } = props;
+function Header({ addTodo }) {
   return (
     <header className="header">
       <h1>todos</h1>
