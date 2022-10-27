@@ -38,6 +38,15 @@ export default function App() {
     setVisibleTodos(filterFunc(todos, filter));
   }, [filter, todos]);
 
+  const findIndexById = (id) => todos.findIndex((el) => el.id === id);
+
+  const setTimer = (timeLeft, id) => {
+    const idx = findIndexById(id);
+    const newItem = Object.assign(todos[idx], { timer: timeLeft });
+    const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
+    setTodos(newArray);
+  };
+
   const createTodo = (label, timer) => {
     return {
       label,
@@ -85,7 +94,7 @@ export default function App() {
   };
 
   const deleteTodo = (id) => {
-    const idx = todos.findIndex((el) => el.id === id);
+    const idx = findIndexById(id);
     const newArray = [...todos.slice(0, idx), ...todos.slice(idx + 1)];
     setTodos(newArray);
   };
@@ -96,7 +105,7 @@ export default function App() {
   };
 
   const edit = (id, text) => {
-    const idx = todos.findIndex((el) => el.id === id);
+    const idx = findIndexById(id);
     const newItem = { ...todos[idx], label: text };
     const newArray = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];
     setTodos(newArray);
@@ -106,7 +115,13 @@ export default function App() {
     <section className="todoapp">
       <Header addTodo={addTodo} />
       <section className="main">
-        <TaskList todos={visibleTodos} toggleComplete={toggleComplete} deleteTodo={deleteTodo} edit={edit} />
+        <TaskList
+          todos={visibleTodos}
+          toggleComplete={toggleComplete}
+          deleteTodo={deleteTodo}
+          edit={edit}
+          setTimer={setTimer}
+        />
         <Footer todos={todos} filter={filter} clearCompleted={clearCompleted} onFilterChange={onFilterChange} />
       </section>
     </section>

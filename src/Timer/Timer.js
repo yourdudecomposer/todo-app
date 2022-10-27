@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Timer.css';
-export default function Timer(props) {
-  const { timer, isCompleted } = props;
-
+export default function Timer({ timer, isCompleted, setTimer, id }) {
   const [timeLeft, setTimeLeft] = useState(timer);
   const [isCounting, setIsCounting] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -23,6 +21,7 @@ export default function Timer(props) {
     }
     return () => {
       clearInterval(timerId);
+      setTimer(timeLeft, id);
     };
   }, [isCounting, isCompleted, timeLeft]);
 
@@ -39,6 +38,7 @@ export default function Timer(props) {
   };
 
   const pause = () => {
+    if (!isCounting) return;
     setIsCounting(false);
   };
 

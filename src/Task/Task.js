@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Timer from '../Timer/Timer';
 
-export default function Task({ id, isCompleted, label, date, timer, toggleComplete, deleteTodo, edit }) {
+export default function Task({ id, isCompleted, label, date, timer, toggleComplete, deleteTodo, edit, setTimer }) {
   const timeAgo = formatDistanceToNow(date, {
     includeSeconds: true,
     addSuffix: true,
@@ -48,7 +48,7 @@ export default function Task({ id, isCompleted, label, date, timer, toggleComple
             <span className="title" onClick={toggleComplete}>
               {title}
             </span>
-            <Timer isCompleted={isCompleted} timer={timer} />
+            <Timer id={id} setTimer={setTimer} isCompleted={isCompleted} timer={timer} />
             <span className="description">created {timeAgo}</span>
           </label>
           <button className="icon icon-edit" onClick={startEditTodo}></button>
