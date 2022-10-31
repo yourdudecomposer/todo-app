@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Timer.css';
-export default function Timer({ timer, isCompleted, setTimer, id }) {
+export default function Timer({ timer, isCompleted }) {
   const [timeLeft, setTimeLeft] = useState(timer);
   const [isCounting, setIsCounting] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -21,7 +21,6 @@ export default function Timer({ timer, isCompleted, setTimer, id }) {
     }
     return () => {
       clearInterval(timerId);
-      setTimer(timeLeft, id);
     };
   }, [isCounting, isCompleted, timeLeft]);
 
