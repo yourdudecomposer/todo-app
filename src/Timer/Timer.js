@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Timer.css';
-export default function Timer({ timer, isCompleted }) {
+export default function Timer({ timer, isCompleted, setTimer, id }) {
   const [timeLeft, setTimeLeft] = useState(timer);
   const [isCounting, setIsCounting] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -29,7 +29,9 @@ export default function Timer({ timer, isCompleted }) {
       setIsDisabled(true);
     } else setIsDisabled(false);
   }, [isCompleted, timeLeft]);
-
+  useEffect(() => {
+    setTimer(timeLeft, id);
+  }, [timeLeft]);
   const play = () => {
     if (!isCompleted) {
       setIsCounting(true);
